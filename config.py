@@ -1,0 +1,7 @@
+# config.py
+
+BOT_TOKEN = "7763416844:AAFm_pi0I9FCT2kyB5jxgYLajvAsCugcFxA"
+MANAGER_CHAT_ID = 203508229
+
+PAYPAL_LINK = "https://www.paypal.com/ncp/payment/SJJ32EJZ66F6C"
+CRYPTO_WALLET = "0x1c9945cee7588600da68fd394ae7783adeddbd18"
