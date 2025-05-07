@@ -1,5 +1,5 @@
 # config.py
-
+import os
 BOT_TOKEN = os.getenv("7763416844:AAFm_pi0I9FCT2kyB5jxgYLajvAsCugcFxA")
 MANAGER_CHAT_ID = os.getenv("203508229")
 
