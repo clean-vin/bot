@@ -6,18 +6,19 @@ from aiogram.types import Update
 from aiogram.enums import ParseMode
 from aiogram.client.session.aiohttp import AiohttpSession
 
-# Получаем токен из переменных окружения (настроить в Render → Environment)
+# Получаем токен и URL
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")  # Например: https://your-app-name.onrender.com/webhook
 
-# Создаем объекты бота и диспетчера
+# Инициализация бота и диспетчера
 session = AiohttpSession()
 bot = Bot(token=BOT_TOKEN, parse_mode=ParseMode.HTML, session=session)
 dp = Dispatcher()
 
-# Инициализация FastAPI
+# FastAPI приложение
 app = FastAPI()
 
-# Роутинг вебхука
+# Роут для Telegram вебхука
 @app.post("/webhook")
 async def telegram_webhook(request: Request):
     try:
@@ -28,14 +29,19 @@ async def telegram_webhook(request: Request):
     except Exception as e:
         return {"error": str(e)}
 
-# Пример простого хендлера на сообщение
+# Простой обработчик
 @dp.message()
 async def handle_message(message):
-    await message.answer("Привет! Я работаю через вебхук на Render 😊")
+    await message.answer("Привет с Render! 🚀")
 
-# Настройка запуска (необязательно на Render, но полезно локально)
+# Устанавливаем вебхук при запуске
 @app.on_event("startup")
 async def on_startup():
+    if WEBHOOK_URL:
+        await bot.set_webhook(WEBHOOK_URL)
+        print(f"✅ Вебхук установлен: {WEBHOOK_URL}")
+    else:
+        print("⚠️ WEBHOOK_URL не задан")
     print("🚀 Bot is running")
 
 @app.on_event("shutdown")
